@@ -238,7 +238,7 @@ body{
  margin:0;background:#e9eef5;color:#17283b;
  font-family:'Segoe UI', Tahoma, Arial, sans-serif;
 }
-.toolbar{
+.filters{
  position:sticky;top:0;z-index:100;
  background:#102d55;color:white;padding:12px;
  display:flex;gap:9px;justify-content:center;align-items:center;flex-wrap:wrap;
@@ -263,10 +263,7 @@ button:hover{background:#0863b5}
 .whatsapp-btn{background:#25d366 !important;}
 .whatsapp-btn:hover{background:#1ebe57 !important;}
 input{min-width:180px}
-.filters{
- display:flex;justify-content:center;gap:8px;
- padding:12px;flex-wrap:wrap;
-}
+
 #count{text-align:center;color:#52677e;padding:5px;font-weight:bold}
 
 .page{
@@ -546,15 +543,6 @@ input{min-width:180px}
 </head>
 
 <body>
-
-<div class="toolbar">
- <button onclick="window.print()">طباعة / حفظ PDF</button>
- <button onclick="resetFilters()">إعادة الضبط</button>
- 
- 
-
- <a href="https://wa.me/212777497771?text=سلام،%20أريد%20طلب%20لعبة%20غير%20موجودة%20في%20الكتالوج" target="_blank" style="text-decoration:none;"><button class="whatsapp-btn">طلب لعبة غير موجودة 💬</button></a>
-</div>
 
 <div class="filters">
  <input id="search" placeholder="ابحث عن لعبة، كود CUSA، أو سنة..." oninput="render()">
