@@ -511,33 +511,67 @@ function makeStoreCoverPage() {
  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(waLink)}`;
 
  return `
- <section class="page store-cover">
-  <div class="store-logo-area">
-   <h1>STORE DAKHLA</h1>
-   <p>الكتالوج الرسمي لألعاب PS4 FLASHI</p>
-  </div>
-  
-  <div class="store-badge">
-   <h2>🎮 أهلاً بك عزيزي الزبون</h2>
-   <h3>أدا كان جهازك معدل و خاصك العاب انت في المكان المناسب PS4 FLASHI</h3>
-   <p>اكتر من 100 لعبة متاحة و تثبيت سريع خاص بسكان مدينة الداخلة الصحراء </p>
-   <p>الا ملقيتيش للعبة لبغيتي راسلني على الواتساب لتوفيرها  </p>
-   <p>امسح الرمز أدناه بكاميرا هاتفك أو اضغط على الزر للتواصل المباشر معنا عبر الواتساب لاختيار وطلب ألعابك.</p>
-   
-   <div class="qr-container">
-    <img src="${qrApiUrl}" alt="WhatsApp QR Code">
-   </div>
+ 
+<section class="page store-cover">
 
-   <a href="${waLink}" target="_blank" class="cover-wa-btn">
-    <span>تواصل عبر واتساب 0777497771</span>
-   </a>
+  <div class="cover-glow"></div>
+
+  <div class="store-logo-area">
+    <span class="cover-tag">PLAYSTATION 4 GAMING</span>
+    <h1>STORE DAKHLA</h1>
+    <p>كتالوج ألعاب PS4 المعدّلة</p>
+    <div class="logo-line"></div>
+  </div>
+
+  <div class="store-badge">
+
+    <h2>🎮 مرحباً بك في عالم ألعاب PS4!</h2>
+
+    <h3>
+      هل تمتلك جهاز PS4 معدّلاً وتبحث عن ألعاب جديدة؟
+      أنت في المكان المناسب!
+    </h3>
+
+    <p>
+      اكتشف أكثر من 100 لعبة متنوعة، واختر ألعابك المفضلة
+      واستفد من خدمة تثبيت الألعاب بسرعة واحترافية.
+    </p>
+
+    <p>
+      لم تجد اللعبة التي تبحث عنها؟
+      راسلنا وسنعمل على توفيرها لك.
+    </p>
+
+    <div class="cover-features">
+      <div>🎮 ألعاب متنوعة</div>
+      <div>⚡ تثبيت سريع</div>
+      <div>🚚 توصيل مجاني داخل الداخلة</div>
+    </div>
+
+    <div class="qr-container">
+      <p>امسح الرمز للتواصل معنا عبر واتساب</p>
+      <img src="${qrApiUrl}" alt="رمز التواصل عبر واتساب">
+    </div>
+
+    <a href="${waLink}" target="_blank"
+       rel="noopener noreferrer" class="cover-wa-btn">
+      <span>واتساب 0777497771</span>
+      <span>💬</span>
+    </a>
+
+    <a href="#games" class="cover-games-btn">
+      <span>استعرض الألعاب الآن</span>
+      <span>⬇️</span>
+    </a>
+
   </div>
 
   <div class="store-footer-note">
-   <p style="margin:5px 0;">✨ للمزيد من الألعاب أو لطلب لعبة غير متوفرة في الكتالوج، راسلني فوراً.</p>
-   <p style="margin:5px 0; color:#fff; font-weight:bold;"> مدينة الداخلة 🚚</p>
+    <p>✨ اختر ألعابك المفضلة واستمتع بتجربة لعب رائعة!</p>
+    <p>📍 STORE DAKHLA - مدينة الداخلة</p>
   </div>
- </section>`;
+
+</section>`;
 }
 
 function render(){
