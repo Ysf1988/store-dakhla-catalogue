@@ -206,17 +206,7 @@ input{min-width:180px}
  position:relative;text-align:center;
 }
 .game-number {
- position: absolute;
- top: -9px;
- left: -16px;
- background: #0756a5;
- color: white;
- border-radius: 3px;
- padding: 4px 22px;
- font-size: 20px;
- font-weight: bold;
- direction: ltr;
- z-index: 2;
+    display: none !important;
 }
 /* خانة الاختيار للسلة المتعددة */
 .game-checkbox {
@@ -846,7 +836,6 @@ function makeCard(g){
  return `
  <div class="game-card">
   <input type="checkbox" class="game-checkbox" ${isChecked} onchange="toggleCart(${g.number})" title="حدد لإضافة السلة">
-  <div class="game-number">#${String(g.number).padStart(3,"0")}</div>
   ${coverHTML(g)}
   <div class="game-name">${escapeHTML(g.name)}</div>
   <div class="genre-tag">${escapeHTML(genreLabels[g.genre]||g.genre)}</div>
