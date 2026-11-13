@@ -694,7 +694,7 @@ function makeCard(g){
 function makePage(title,items,pageNo,totalPages){
  const cards=items.map(makeCard).join("");
  return `
- <section class="page"  id="games">
+ <section class="page">
   <h2 class="section-title">${escapeHTML(title)}</h2>
   <div class="page-info">
    ${items.length} ألعاب • صفحة ${pageNo} من ${totalPages}
