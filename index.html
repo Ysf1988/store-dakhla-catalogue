@@ -366,18 +366,6 @@ input{min-width:180px}
  <select id="genre" onchange="render()">
   <option value="">جميع التصنيفات</option>
  </select>
- <select id="source" onchange="render()">
-  <option value="">جميع المصادر (القرص الصلب)</option>
-  <option value="1">المصدر 1</option>
-  <option value="2">المصدر 2</option>
-  <option value="3">المصدر 3</option>
-  <option value="4">المصدر 4</option>
-  <option value="5">المصدر 5</option>
-  <option value="6">المصدر 6</option>
-  <option value="7">المصدر 7</option>
-  <option value="8">المصدر 8</option>
-  <option value="BACK 500 GO">قرص احتياطي 500 جيجا</option>
- </select>
 </div>
 
 <div id="count"></div>
@@ -935,7 +923,7 @@ function makeStoreCoverPage() {
 function render(){
  const query=document.getElementById("search").value.toLowerCase();
  const genre=document.getElementById("genre").value;
- const source=document.getElementById("source").value;
+ const source = '';
 
  let filtered=games.filter(g=>{
   const text=[g.name,g.cusa,g.size,g.source,g.genre,g.year,
