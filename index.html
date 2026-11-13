@@ -29,6 +29,13 @@
  --wa:#25d366;
  --cover-height: 50%; /* القيمة الافتراضية لارتفاع الغلاف */
 }
+ html {
+    scroll-behavior: smooth;
+}
+
+#games {
+    scroll-margin-top: 20px;
+}
 *{box-sizing:border-box}
 body{
  margin:0;background:#e9eef5;color:#17283b;
@@ -384,7 +391,7 @@ input{min-width:180px}
  z-index: 1;
 }
 /* شبكة 12 لعبة في الصفحة */
-.games-grid{
+.{
  display:grid;
  grid-template-columns:repeat(4,minmax(0,1fr));
  grid-template-rows:repeat(3,minmax(0,1fr));
@@ -507,7 +514,7 @@ input{min-width:180px}
 
 /* استجابة شاشات الهواتف المحمولة */
 @media screen and (max-width: 768px) {
- .games-grid {
+ . {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   grid-template-rows: repeat(6, minmax(0, 1fr)) !important;
   height: auto !important;
@@ -687,7 +694,7 @@ function makeCard(g){
 function makePage(title,items,pageNo,totalPages){
  const cards=items.map(makeCard).join("");
  return `
- <section class="page">
+ <section class="page"  id="games">
   <h2 class="section-title">${escapeHTML(title)}</h2>
   <div class="page-info">
    ${items.length} ألعاب • صفحة ${pageNo} من ${totalPages}
