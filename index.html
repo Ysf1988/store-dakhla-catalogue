@@ -49,7 +49,20 @@ body{
 }
  
 /* STORE DAKHLA - Professional Gaming Cover */
-
+@media screen and (max-width: 768px) {
+ .games-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(6, minmax(0, 1fr)) !important;
+  height: auto !important;
+ }
+ .page {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100vh;
+  margin: 5px 0;
+  padding: 8mm;
+ }
+}
 .store-cover {
     position: relative;
     overflow: hidden;
