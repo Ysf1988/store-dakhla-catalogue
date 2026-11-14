@@ -157,7 +157,7 @@ function makeCard(g) {
  </div>`;
 }
 function makePage(title, items, p, total, first) {
- return `<section class="page" ${first ? 'id="first"' : ""}>
+ return `<section class="page${p > 1 ? " cont" : ""}" ${first ? 'id="first"' : ""}>
   <h2 class="section-title">${esc(title)}</h2>
   <div class="page-info">${t().info.replace("{n}", items.length).replace("{p}", p).replace("{t}", total)}</div>
   <div class="games-grid">${items.map(makeCard).join("")}</div>
