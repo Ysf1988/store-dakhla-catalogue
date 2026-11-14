@@ -166,7 +166,6 @@ function makePage(title, items, p, total, first) {
 }
 function coverPage() {
  const x = t(), link = `https://wa.me/${WA}?text=${encodeURIComponent(x.hello)}`;
- const qr = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(link)}`;
  return `<section class="page store-cover"><div class="cover-glow"></div>
   <div class="store-logo-area"><span class="cover-tag">${x.tag}</span><h1>STORE DAKHLA</h1><div class="logo-line"></div></div>
   <div class="store-badge">
@@ -177,7 +176,6 @@ function coverPage() {
     <p><b>1️⃣ ${HOW[lang].s}</b> ${HOW[lang].s1}</p>
     <p><b>2️⃣ ${HOW[lang].m}</b> ${HOW[lang].m1}</p>
     <p>✅ ${HOW[lang].n}</p></div>
-   <div class="qr-container"><p>${x.qr}</p><img src="${qr}" alt="QR WhatsApp"></div>
    <a href="${link}" target="_blank" rel="noopener noreferrer" class="cover-wa-btn"><span>${x.wa} ${PHONE}</span><span>💬</span></a>
    <a href="#first" class="cover-games-btn"><span>${x.browse}</span><span>⬇️</span></a>
   </div>
