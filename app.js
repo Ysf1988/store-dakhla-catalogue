@@ -48,7 +48,7 @@ const HOW = {
   n:"بعد الإرسال نؤكد لك الطلب ونتفق على موعد التثبيت."},
  fr:{t:"📋 Comment commander ?",s:"Un seul jeu :",s1:"Appuyez sur « Commander sur WhatsApp » sous le jeu : la discussion s'ouvre avec un message prêt, il suffit de l'envoyer.",
   m:"Plusieurs jeux :",m1:"Cochez ☑ tous les jeux voulus, ouvrez la barre flottante 🛒 pour vérifier ou retirer des jeux, puis « Envoyer sur WhatsApp » : votre commande complète arrive avec le total.",
-  n:"Après l'envoi, nous confirmons la commande et fixons le moment de l'installation."},
+  n:"Après l'envoi, nous confirmons la commande et fixons le moment de l'llation."},
  en:{t:"📋 How to order",s:"A single game:",s1:"Tap “Order on WhatsApp” under the game; the chat opens with a ready message, just send it.",
   m:"Several games:",m1:"Tick ☑ every game you want, open the floating 🛒 bar to review or remove games, then “Send via WhatsApp” to send the full order with the total.",
   n:"After sending, we confirm your order and agree on the installation time."}
@@ -217,7 +217,7 @@ function buildChips() {
 
 /* ===== آراء الزبائن ===== */
 const PUBLIC_URL = "https://ysf1988.github.io/store-dakhla-catalogue/";
-const IG_URL = "https://www.instagram.com/youssef.satouri/";  // ← ضع رابط حساب المتجر على إنستغرام
+const IG_URL = "https://www.instagram.com/storedakhla0/";  // ← ضع رابط حساب المتجر على إنستغرام
 const REVIEWS = [ /* أضف الآراء المعتمدة هنا: {name:"محمد", stars:5, text:"خدمة ممتازة وتثبيت سريع"}, */ ];
 const FB_LOCALE = {ar:"ar_AR", fr:"fr_FR", en:"en_US"};
 const REV = {
