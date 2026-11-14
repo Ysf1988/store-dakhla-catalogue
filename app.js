@@ -1,6 +1,374 @@
 /* STORE DAKHLA - منطق الكتالوج (يعتمد على Scripte.js: games, genres, genreLabels, gameLanguages) */
 const WA = "212777497771", PHONE = "0777497771";
+/* STORE DAKHLA - منطق الكتالوج (يعتمد على Scripte.js: games, genres, genreLabels, gameLanguages) */
+const WA = "212777497771", PHONE = "0777497771";
 
+const T = {
+ ar: {ph:"ابحث عن لعبة، كود CUSA، أو سنة...", all:"الكل", arOnly:"ألعاب بالعربية فقط", print:"🖨️ PDF",
+  tag:"كتالوج ألعاب PS4 المعدّلة", h2:"🎮 مرحباً بك في عالم ألعاب PS4!",
+  h3:"هل تمتلك جهاز PS4 معدّلاً وتبحث عن ألعاب جديدة؟ أنت في المكان المناسب!",
+  p1:"اكتشف أكثر من {n} لعبة متنوعة، واختر ألعابك المفضلة واستفد من خدمة تثبيت الألعاب بسرعة واحترافية.",
+  p2:"لم تجد اللعبة التي تبحث عنها؟ راسلنا وسنعمل على توفيرها لك.",
+  f:["🎮 ألعاب متنوعة","⚡ تثبيت سريع","🚚 توصيل مجاني داخل الداخلة"],
+  qr:"امسح الرمز للتواصل معنا عبر واتساب", wa:"واتساب", browse:"استعرض الألعاب الآن",
+  n1:"✨ اختر ألعابك المفضلة واستمتع بتجربة لعب رائعة!", n2:"📍 STORE DAKHLA - مدينة الداخلة",
+  info:"{n} ألعاب • صفحة {p} من {t}", code:"الكود", year:"الإصدار", size:"الحجم", lang:"اللغة",
+  la:"العربية", le:"الإنجليزية", gb:"جيغا", mb:"ميغا", order:"🛒 اطلب عبر واتساب", cart:"الألعاب المحددة",
+  send:"إرسال عبر واتساب 💬", clear:"إفراغ السلة", total:"المجموع", none:"لا توجد نتائج مطابقة لبحثك",
+  req:"اطلب هذه اللعبة عبر واتساب", reqMsg:"سلام، أبحث عن اللعبة:", head:"أريد طلب الألعاب التالية:",
+  hello:"سلام Store Dakhla، أريد الاستفسار عن ألعاب PS4", pick:"حدد لإضافة السلة"},
+ fr: {ph:"Cherchez un jeu, un code CUSA, une année...", all:"Tout", arOnly:"Jeux en arabe seulement", print:"🖨️ PDF",
+  tag:"CATALOGUE DE JEUX PS4 DÉBLOQUÉE", h2:"🎮 Bienvenue dans l'univers des jeux PS4 !",
+  h3:"Vous avez une PS4 débloquée et cherchez de nouveaux jeux ? Vous êtes au bon endroit !",
+  p1:"Découvrez plus de {n} jeux variés, choisissez vos favoris et profitez d'une installation rapide et professionnelle.",
+  p2:"Vous ne trouvez pas votre jeu ? Écrivez-nous, nous le trouverons pour vous.",
+  f:["🎮 Jeux variés","⚡ Installation rapide","🚚 Livraison gratuite à Dakhla"],
+  qr:"Scannez le code pour nous contacter sur WhatsApp", wa:"WhatsApp", browse:"Voir les jeux",
+  n1:"✨ Choisissez vos jeux préférés et profitez !", n2:"📍 STORE DAKHLA - Ville de Dakhla",
+  info:"{n} jeux • page {p} sur {t}", code:"Code", year:"Année", size:"Taille", lang:"Langue",
+  la:"Arabe", le:"Anglais", gb:"Go", mb:"Mo", order:"🛒 Commander sur WhatsApp", cart:"Jeux sélectionnés",
+  send:"Envoyer sur WhatsApp 💬", clear:"Vider le panier", total:"Total", none:"Aucun résultat pour votre recherche",
+  req:"Demander ce jeu sur WhatsApp", reqMsg:"Bonjour, je cherche le jeu :", head:"Je souhaite commander les jeux suivants :",
+  hello:"Bonjour Store Dakhla, je voudrais des infos sur les jeux PS4", pick:"Cochez pour ajouter au panier"},
+ en: {ph:"Search a game, CUSA code, or year...", all:"All", arOnly:"Arabic-language games only", print:"🖨️ PDF",
+  tag:"MODDED PS4 GAMES CATALOGUE", h2:"🎮 Welcome to the world of PS4 games!",
+  h3:"Do you own a modded PS4 and want new games? You're in the right place!",
+  p1:"Discover {n}+ different games, pick your favourites and enjoy fast, professional installation.",
+  p2:"Can't find your game? Message us and we'll get it for you.",
+  f:["🎮 Wide selection","⚡ Fast installation","🚚 Free delivery in Dakhla"],
+  qr:"Scan the code to chat with us on WhatsApp", wa:"WhatsApp", browse:"Browse games",
+  n1:"✨ Pick your favourite games and enjoy!", n2:"📍 STORE DAKHLA - Dakhla City",
+  info:"{n} games • page {p} of {t}", code:"Code", year:"Year", size:"Size", lang:"Language",
+  la:"Arabic", le:"English", gb:"GB", mb:"MB", order:"🛒 Order on WhatsApp", cart:"Selected games",
+  send:"Send via WhatsApp 💬", clear:"Clear cart", total:"Total", none:"No games match your search",
+  req:"Request this game on WhatsApp", reqMsg:"Hi, I'm looking for the game:", head:"I'd like to order these games:",
+  hello:"Hi Store Dakhla, I'd like info about PS4 games", pick:"Tick to add to cart"}
+};
+const HOW = {
+ ar:{t:"📋 كيف تطلب؟",s:"لعبة واحدة:",s1:"اضغط زر «اطلب عبر واتساب» تحت اللعبة، فتفتح المحادثة برسالة جاهزة، ثم أرسلها.",
+  m:"مجموعة ألعاب:",m1:"حدّد ☑ على كل الألعاب التي تريدها، ثم اضغط على الشريط العائم 🛒 لمراجعة القائمة وحذف ما لا تريد، ثم «إرسال عبر واتساب» ليصلنا طلبك كاملًا مع المجموع.",
+  n:"بعد الإرسال نؤكد لك الطلب ونتفق على موعد التثبيت."},
+ fr:{t:"📋 Comment commander ?",s:"Un seul jeu :",s1:"Appuyez sur « Commander sur WhatsApp » sous le jeu : la discussion s'ouvre avec un message prêt, il suffit de l'envoyer.",
+  m:"Plusieurs jeux :",m1:"Cochez ☑ tous les jeux voulus, ouvrez la barre flottante 🛒 pour vérifier ou retirer des jeux, puis « Envoyer sur WhatsApp » : votre commande complète arrive avec le total.",
+  n:"Après l'envoi, nous confirmons la commande et fixons le moment de l'installation."},
+ en:{t:"📋 How to order",s:"A single game:",s1:"Tap “Order on WhatsApp” under the game; the chat opens with a ready message, just send it.",
+  m:"Several games:",m1:"Tick ☑ every game you want, open the floating 🛒 bar to review or remove games, then “Send via WhatsApp” to send the full order with the total.",
+  n:"After sending, we confirm your order and agree on the installation time."}
+};
+const GL = {
+ fr:{HORREUR:"Horreur",GUERRE:"Guerre & tir","MONDE OUVERT":"Monde ouvert",AVENTURE:"Aventure",COMBAT:"Combat",SPORT:"Sport",COURSE:"Course",RPG:"RPG",FAMILLE:"Famille & coop",SIMULATION:"Simulation",ACTION:"Action",tools:"Outils"},
+ en:{HORREUR:"Horror",GUERRE:"War & shooters","MONDE OUVERT":"Open world",AVENTURE:"Adventure",COMBAT:"Fighting",SPORT:"Sports",COURSE:"Racing",RPG:"RPG",FAMILLE:"Family & co-op",SIMULATION:"Simulation",ACTION:"Action",tools:"Tools"}
+};
+
+/* بحث بالعربية: كلمة عربية -> ما يقابلها في أسماء الألعاب */
+const norm = s => String(s).toLowerCase().normalize("NFD")
+ .replace(/[\u0300-\u036f\u064b-\u065f]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/\s+/g," ").trim();
+const ALIASES = [["فيفا","fifa"],["جي تي اي","gta"],["جي تي ايه","gta"],["سبايدر مان","spider"],["سبايدرمان","spider"],
+ ["كول اوف ديوتي","call of duty"],["ريزدنت ايفل","resident evil"],["ويتشر","witcher"],["غود اوف وور","god of war"],
+ ["اله الحرب","god of war"],["ريد ديد","red dead"],["بيس","pes"],["ايفوتبول","efootball"],["ماينكرافت","minecraft"],
+ ["ناروتو","naruto"],["اساسنز","assassin"],["فار كراي","far cry"],["دراغون بول","dragon ball"],["ون بيس","one piece"],
+ ["مورتال كومبات","mortal kombat"],["تيكن","tekken"],["كراش","crash"],["هيتمان","hitman"],["بيتلفيلد","battlefield"]]
+ .map(([a,b]) => [norm(a), b]);
+
+function prepare() {
+ games.forEach(g => {
+ g._h = norm([g.name,g.cusa,g.size,g.source,g.year,g.genre,genreLabels[g.genre]||"",
+  GL.fr[g.genre]||"",GL.en[g.genre]||"",g.number].join(" "));
+ });
+}
+
+
+/* ===== الإعدادات (املأ الروابط هنا) ===== */
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1iNjNkLvAlNWYkow4Mgp1JR0Aa2wzTQknY5UT-krJFQgaHMaccc4-_NZ1n8IhHqUe_SiUaNreSef_/pub?gid=1519606279&single=true&output=csv";   // رابط Google Sheet المنشور بصيغة CSV (اتركه فارغًا لاستعمال Scripte.js)
+const TRACK_URL = "https://script.google.com/macros/s/AKfycbx1HyGIfUU9FPjN5TvlV8Os5D0APfvTZxDZrHU5ZdakdiXI6MfadzsfyOPsxTFUAMfr/exec";       // رابط Google Apps Script لتسجيل نقرات الطلب
+const SOCIAL = { instagram: "https://www.instagram.com/storedakhla0/", tiktok: "https://www.tiktok.com/@storedakhla", facebook: "https://www.facebook.com/StoreDakhla2", channel: "" };  // روابط حساباتك
+const TOP = {ar:"🔥 الأكثر طلبًا", fr:"🔥 Les plus demandés", en:"🔥 Most requested"};
+const FOLLOW = {ar:"تابعنا", fr:"Suivez-nous", en:"Follow us"};
+
+function parseCSV(txt) {
+ const rows = []; let r = [], c = "", q = false;
+ for (let i = 0; i < txt.length; i++) {
+  const ch = txt[i];
+  if (q) { if (ch === '"') { if (txt[i + 1] === '"') { c += '"'; i++; } else q = false; } else c += ch; }
+  else if (ch === '"') q = true;
+  else if (ch === ",") { r.push(c); c = ""; }
+  else if (ch === "\n" || ch === "\r") { if (ch === "\r" && txt[i + 1] === "\n") i++; r.push(c); rows.push(r); r = []; c = ""; }
+  else c += ch;
+ }
+ if (c || r.length) { r.push(c); rows.push(r); }
+ return rows;
+}
+async function loadSheet() {
+ const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+ if (!res.ok) throw new Error("sheet");
+ const rows = parseCSV(await res.text());
+ const h = rows.shift().map(x => x.trim().toLowerCase());
+ const list = rows.map(r => {
+  const v = n => (r[h.indexOf(n)] || "").trim();
+  return { name: v("name"), cusa: v("cusa"), size: v("size"), source: v("source"), genre: v("genre"),
+   year: v("year") || "—", lang: v("language"), cover: v("cover"), clicks: parseInt(v("clicks")) || 0 };
+ }).filter(g => g.name && g.genre);
+ if (!list.length) throw new Error("empty");
+ list.sort((a, b) => a.genre !== b.genre ? a.genre.localeCompare(b.genre) : a.name.localeCompare(b.name, "en", { sensitivity: "accent" }));
+ games.length = 0;
+ list.forEach((g, i) => {
+  games.push({ number: i + 1, name: g.name, cusa: g.cusa, size: g.size, source: g.source, genre: g.genre, year: g.year, clicks: g.clicks });
+  if (g.cover) covers[g.cusa] = g.cover;
+  if (g.lang) gameLanguages[g.name] = /^(ar|عرب)/i.test(g.lang) ? "العربية" : "الإنجليزية";
+ });
+ const order = [...genres]; list.forEach(g => { if (!order.includes(g.genre)) order.push(g.genre); });
+ genres.length = 0; genres.push(...order.filter(x => games.some(g => g.genre === x)));
+}
+/* تسجيل نقرات الطلب (يُرسل بدون إبطاء الصفحة) */
+function track(name, type) {
+ if (!TRACK_URL) return;
+ try { navigator.sendBeacon(TRACK_URL, JSON.stringify({ game: name, type: type || "single" })); } catch(e) {}
+}
+function trackGame(num) { const g = games.find(x => x.number === num); if (g) track(g.name, "single"); }
+function renderFooter() {
+ const S = (d, f) => `<svg viewBox="0 0 24 24" ${f ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="2"'}>${d}</svg>`;
+ const I = {
+  ig: S('<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>'),
+  tt: S('<path d="M16.6 2h-3.2v13.2a2.8 2.8 0 1 1-2.8-2.8c.3 0 .6 0 .8.1V9.2a6 6 0 1 0 5.2 5.9V8.6a7 7 0 0 0 4 1.3V6.7a4 4 0 0 1-4-4.7z"/>', 1),
+  fb: S('<path d="M14 8V6.5c0-.8.2-1.2 1.3-1.2H17V2h-2.7C11.4 2 10 3.7 10 6.2V8H7.5v3.3H10V22h4V11.3h2.7L17 8z"/>', 1),
+  wa: S('<path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/>')
+ };
+ const L = [["instagram","ig","Instagram"],["tiktok","tt","TikTok"],["facebook","fb","Facebook"],["channel","wa","WhatsApp Channel"]]
+  .filter(([k]) => SOCIAL[k]).map(([k, c, n]) => `<a class="${c}" href="${esc(SOCIAL[k])}" target="_blank" rel="noopener">${I[c]}<span>${n}</span></a>`);
+ L.unshift(`<a class="wa" href="https://wa.me/${WA}" target="_blank" rel="noopener">${I.wa}<span dir="ltr">${PHONE}</span></a>`);
+ $("siteFooter").innerHTML = `<div class="sf-inner">
+  <div class="sf-brand">STORE DAKHLA<small>${t().tag}</small></div>
+  <div class="sf-title">${FOLLOW[lang]}</div>
+  <div class="sf-links">${L.join("")}</div>
+  <div class="sf-copy">© ${new Date().getFullYear()} STORE DAKHLA</div>
+ </div>`;
+}
+
+let lang = "ar", genre = "";
+try { lang = localStorage.getItem("sd_lang") || "ar"; } catch(e) {}
+const t = () => T[lang];
+const genreName = g => g === "__top" ? TOP[lang] : lang === "ar" ? (genreLabels[g] || g) : ((GL[lang] || {})[g] || g);
+const isAr = g => gameLanguages[g.name] === "العربية";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+
+function fmtSize(sz) { return sz.replace(/Go/i, t().gb).replace(/Mo/i, t().mb); }
+function sizeGB(sz) {
+ const m = sz.match(/([\d.,]+)\s*(Go|Mo)/i);
+ if (!m) return 0;
+ const v = parseFloat(m[1].replace(",", "."));
+ return /mo/i.test(m[2]) ? v / 1024 : v;
+}
+
+/* ===== السلة (محفوظة في المتصفح) ===== */
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem("sd_cart") || "[]"); } catch(e) {}
+const saveCart = () => { try { localStorage.setItem("sd_cart", JSON.stringify(cart)); } catch(e) {} };
+const cartGames = () => cart.map(n => games.find(g => g.name === n)).filter(Boolean);
+
+function toggleCart(num) {
+ const g = games.find(x => x.number === num);
+ if (!g) return;
+ cart = cart.includes(g.name) ? cart.filter(n => n !== g.name) : [...cart, g.name];
+ saveCart(); updateCartUI();
+}
+function removeFromCart(num) { toggleCart(num); render(); }
+function clearCart() { cart = []; saveCart(); updateCartUI(); render(); }
+function toggleCartPanel() {
+ const p = $("cartPanel");
+ p.style.display = p.style.display === "none" ? "block" : "none";
+ updateCartUI();
+}
+function updateCartUI() {
+ const list = cartGames(), bar = $("floatingCart"), p = $("cartPanel");
+ $("cartCount").textContent = list.length;
+ bar.style.display = list.length ? "flex" : "none";
+ if (!list.length) p.style.display = "none";
+ if (p.style.display !== "none") {
+  const total = list.reduce((s, g) => s + sizeGB(g.size), 0).toFixed(1);
+  p.innerHTML = list.map(g => `<div class="cart-row"><span dir="ltr">${esc(g.name)}</span>
+   <button onclick="removeFromCart(${g.number})">✕</button></div>`).join("") +
+   `<div class="cart-total"><span>${t().total}</span><span dir="ltr">${total} ${t().gb}</span></div>
+   <button class="clear-btn" onclick="clearCart()">${t().clear}</button>`;
+ }
+}
+function sendCartToWhatsApp() {
+ const list = cartGames();
+ if (!list.length) return;
+ let text = t().head + "\n";
+ list.forEach((g, i) => { text += `${i + 1}. *${g.name}* (${g.source || "—"}) _ ${g.size}\n`; });
+ text += `\n${t().total}: ${list.reduce((s, g) => s + sizeGB(g.size), 0).toFixed(1)} GB`;
+ list.forEach(g => track(g.name, "cart"));
+ window.open(`https://wa.me/${WA}?text=${encodeURIComponent(text)}`, "_blank");
+}
+
+/* ===== البطاقات والصفحات ===== */
+function coverFail(img) {
+ const d = document.createElement("div");
+ d.className = "cover-placeholder";
+ d.innerHTML = "<strong>PS4</strong><small>STORE DAKHLA</small>";
+ img.replaceWith(d);
+}
+function coverHTML(g) {
+ const url = covers[g.cusa];
+ if (url && url.startsWith("http"))
+  return `<img src="${esc(url)}" alt="${esc(g.name)}" loading="lazy" decoding="async" onerror="coverFail(this)">`;
+ return `<div class="cover-placeholder"><strong>PS4</strong><small>STORE DAKHLA</small></div>`;
+}
+function makeCard(g) {
+ const msg = encodeURIComponent(`${g.name} (${g.source || "—"}) _ ${g.size}`);
+ return `<div class="game-card">
+  <input type="checkbox" class="game-checkbox" ${cart.includes(g.name) ? "checked" : ""} onchange="toggleCart(${g.number})" title="${t().pick}">
+  ${coverHTML(g)}
+  <div class="game-name">${esc(g.name)}</div>
+  <div class="genre-tag">${esc(genreName(g.genre))}</div>
+  <div class="game-meta">${t().code}: <span dir="ltr">${esc(g.cusa || "—")}</span> | ${t().year}: <span dir="ltr">${esc(g.year)}</span><br>
+   ${t().size}: ${esc(fmtSize(g.size))}<br>
+   🌐 ${t().lang}: <strong style="color:#0756a5">${isAr(g) ? t().la : t().le}</strong></div>
+  <a href="https://wa.me/${WA}?text=${msg}" target="_blank" rel="noopener" class="card-wa-btn" onclick="trackGame(${g.number})">${t().order}</a>
+ </div>`;
+}
+function makePage(title, items, p, total, first) {
+ return `<section class="page${p > 1 ? " cont" : ""}" ${first ? 'id="first"' : ""}>
+  <h2 class="section-title">${esc(title)}</h2>
+  <div class="page-info">${t().info.replace("{n}", items.length).replace("{p}", p).replace("{t}", total)}</div>
+  <div class="games-grid">${items.map(makeCard).join("")}</div>
+  <div class="footer"><span>• STORE DAKHLA •</span><span>• ${t().wa}: ${PHONE} •</span></div>
+ </section>`;
+}
+function coverPage() {
+ const x = t(), link = `https://wa.me/${WA}?text=${encodeURIComponent(x.hello)}`;
+ return `<section class="page store-cover"><div class="cover-glow"></div>
+  <div class="store-logo-area"><span class="cover-tag">${x.tag}</span><h1>STORE DAKHLA</h1><div class="logo-line"></div></div>
+  <div class="store-badge">
+   <h2>${x.h2}</h2><h3>${x.h3}</h3>
+   <p>${x.p1.replace("{n}", Math.floor(games.length / 10) * 10)}</p><p>${x.p2}</p>
+   <div class="cover-features">${x.f.map(f => `<div>${f}</div>`).join("")}</div>
+   <div class="how-box"><h4>${HOW[lang].t}</h4>
+    <p><b>1️⃣ ${HOW[lang].s}</b> ${HOW[lang].s1}</p>
+    <p><b>2️⃣ ${HOW[lang].m}</b> ${HOW[lang].m1}</p>
+    <p>✅ ${HOW[lang].n}</p></div>
+   <a href="${link}" target="_blank" rel="noopener noreferrer" class="cover-wa-btn"><span>${x.wa} ${PHONE}</span><span>💬</span></a>
+   <a href="#first" class="cover-games-btn"><span>${x.browse}</span><span>⬇️</span></a>
+   <a href="#reviews" class="cover-games-btn" style="background:linear-gradient(135deg,#1877f2,#0b5ed7)"><span>${REV[lang].t}</span></a>
+  </div>
+  <div class="store-footer-note"><p>${x.n1}</p><p>${x.n2}</p></div>
+ </section>`;
+}
+
+/* ===== العرض والتصفية ===== */
+function render() {
+ const raw = $("search").value, q0 = norm(raw), onlyAr = $("arOnly").checked;
+ let q = q0;
+ ALIASES.forEach(([a, b]) => { if (q.includes(a)) q = q.replace(a, b); });
+ const list = games.filter(g => (!genre || genre === "__top" || g.genre === genre) && (!onlyAr || isAr(g)) && g._h.includes(q));
+ let html = "", first = true;
+ if (!q0 && !genre && !onlyAr) html += coverPage();
+ if (genre === "__top") {
+  const top = list.filter(g => g.clicks > 0).sort((x, y) => y.clicks - x.clicks).slice(0, 12);
+  if (top.length) { html += makePage(TOP[lang], top, 1, 1, true); first = false; }
+ }
+ (genre === "__top" ? [] : genre ? [genre] : genres).forEach(c => {
+  const l = list.filter(g => g.genre === c).sort((x, y) => (y.clicks || 0) - (x.clicks || 0));
+  for (let i = 0; i < l.length; i += 12) {
+   html += makePage(genreName(c), l.slice(i, i + 12), i / 12 + 1, Math.ceil(l.length / 12), first);
+   first = false;
+  }
+ });
+ if (!html) {
+  const m = encodeURIComponent(`${t().reqMsg} ${raw}`);
+  html = `<section class="page"><div class="empty-box"><h2>${t().none}</h2>
+   <a class="cover-wa-btn" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${m}">💬 ${t().req}</a></div></section>`;
+ }
+ $("catalogue").innerHTML = html;
+}
+let timer;
+function debounceRender() { clearTimeout(timer); timer = setTimeout(render, 250); }
+function setGenre(g) { genre = g; buildChips(); render(); window.scrollTo(0, 0); }
+function resetFilters() { $("search").value = ""; $("arOnly").checked = false; genre = ""; buildChips(); render(); }
+function buildChips() {
+ $("chips").innerHTML = [["", t().all], ...(games.some(g => g.clicks > 0) ? [["__top", TOP[lang]]] : []), ...genres.map(g => [g, genreName(g)])]
+  .map(([v, n]) => `<button class="chip ${v === genre ? "on" : ""}" onclick="setGenre('${v}')">${esc(n)}</button>`).join("");
+}
+
+/* ===== آراء الزبائن ===== */
+const PUBLIC_URL = "https://ysf1988.github.io/store-dakhla-catalogue/";
+const IG_URL = "https://www.instagram.com/";  // ← ضع رابط حساب المتجر على إنستغرام
+const REVIEWS = [ /* أضف الآراء المعتمدة هنا: {name:"محمد", stars:5, text:"خدمة ممتازة وتثبيت سريع"}, */ ];
+const FB_LOCALE = {ar:"ar_AR", fr:"fr_FR", en:"en_US"};
+const REV = {
+ ar:{t:"⭐ آراء الزبائن",intro:"شاركنا رأيك في الخدمة وساعد غيرك على الاختيار.",name:"اسمك",ph:"اكتب تعليقك هنا...",
+  fb:"مشاركة على فيسبوك",ig:"نسخ وفتح إنستغرام",wa:"إرسال للمتجر",need:"اكتب تعليقك أولًا.",
+  copied:"تم نسخ تعليقك ✅ الصقه في فيسبوك/إنستغرام إن لم يظهر تلقائيًا.",fbc:"أو علّق مباشرة بحساب فيسبوك:",
+  none:"كن أول من يترك رأيه!",waHead:"رأيي في STORE DAKHLA:"},
+ fr:{t:"⭐ Avis des clients",intro:"Donnez votre avis sur notre service et aidez les autres à choisir.",name:"Votre nom",ph:"Écrivez votre commentaire ici...",
+  fb:"Partager sur Facebook",ig:"Copier et ouvrir Instagram",wa:"Envoyer au magasin",need:"Écrivez d'abord votre commentaire.",
+  copied:"Commentaire copié ✅ Collez-le sur Facebook/Instagram s'il n'apparaît pas automatiquement.",fbc:"Ou commentez directement avec Facebook :",
+  none:"Soyez le premier à donner votre avis !",waHead:"Mon avis sur STORE DAKHLA :"},
+ en:{t:"⭐ Customer reviews",intro:"Share your experience and help others choose.",name:"Your name",ph:"Write your comment here...",
+  fb:"Share on Facebook",ig:"Copy & open Instagram",wa:"Send to the store",need:"Please write your comment first.",
+  copied:"Comment copied ✅ Paste it on Facebook/Instagram if it doesn't appear automatically.",fbc:"Or comment directly with Facebook:",
+  none:"Be the first to leave a review!",waHead:"My review of STORE DAKHLA:"}
+};
+function renderReviews() {
+ const r = REV[lang];
+ const list = REVIEWS.map(v => `<div class="rev-card"><b>${esc(v.name)}</b> <span>${"⭐".repeat(v.stars || 5)}</span><p>${esc(v.text)}</p></div>`).join("")
+  || `<p class="rev-none">${r.none}</p>`;
+ $("reviews").innerHTML = `<h2 class="section-title">${r.t}</h2><p>${r.intro}</p>${list}
+  <div class="rev-form">
+   <input id="revName" placeholder="${r.name}" maxlength="40">
+   <select id="revStars">${[5,4,3,2,1].map(n => `<option value="${n}">${"⭐".repeat(n)}</option>`).join("")}</select>
+   <textarea id="revText" rows="3" maxlength="400" placeholder="${r.ph}"></textarea>
+   <div class="rev-actions">
+    <button class="b-fb" onclick="shareReview('fb')">📘 ${r.fb}</button>
+    <button class="b-ig" onclick="shareReview('ig')">📸 ${r.ig}</button>
+    <button class="b-wa" onclick="shareReview('wa')">💬 ${r.wa}</button>
+   </div><div id="revMsg"></div>
+  </div>
+  <h3>${r.fbc}</h3>
+  <div class="fb-comments" data-href="${PUBLIC_URL}" data-width="100%" data-numposts="5"></div>`;
+ loadFB();
+}
+function shareReview(k) {
+ const x = $("revText").value.trim(), n = $("revName").value.trim(), r = REV[lang];
+ if (!x) { $("revMsg").textContent = r.need; return; }
+ const txt = `${"⭐".repeat(+$("revStars").value)} ${x}${n ? "\n— " + n : ""}\nSTORE DAKHLA`;
+ if (k === "wa") { window.open(`https://wa.me/${WA}?text=${encodeURIComponent(r.waHead + "\n" + txt)}`, "_blank"); return; }
+ if (k === "fb") window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PUBLIC_URL)}&quote=${encodeURIComponent(txt)}`, "_blank");
+ else window.open(IG_URL, "_blank");
+ try { navigator.clipboard.writeText(txt + "\n" + PUBLIC_URL).catch(() => {}); } catch(e) {}
+ $("revMsg").textContent = r.copied;
+}
+function loadFB() {
+ if (window.FB) { FB.XFBML.parse($("reviews")); return; }
+ if ($("fb-sdk")) return;
+ const s = document.createElement("script");
+ s.id = "fb-sdk"; s.async = true; s.crossOrigin = "anonymous";
+ s.src = `https://connect.facebook.net/${FB_LOCALE[lang]}/sdk.js#xfbml=1&version=v19.0`;
+ document.body.appendChild(s);
+}
+
+/* ===== اللغة ===== */
+function setLang(l) { lang = l; try { localStorage.setItem("sd_lang", l); } catch(e) {} applyLang(); }
+function applyLang() {
+ const x = t();
+ document.documentElement.lang = lang;
+ document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+ document.title = "STORE DAKHLA | " + x.tag;
+ $("search").placeholder = x.ph;
+ $("arLbl").textContent = x.arOnly;
+ $("printBtn").textContent = x.print;
+ $("cartLabel").textContent = "🛒 " + x.cart;
+ $("sendBtn").textContent = x.send;
+ document.querySelectorAll(".lang-sw button").forEach(b => b.classList.toggle("on", b.dataset.l === lang));
+ buildChips(); render(); renderReviews(); updateCartUI(); renderFooter();
+}
+prepare();
+applyLang();
+if (SHEET_CSV_URL) {
+ loadSheet().then(() => { prepare(); applyLang(); })
+  .catch(e => console.error("تعذّر تحميل Google Sheet، سيُستعمل Scripte.js:", e));
+}
 const T = {
  ar: {ph:"ابحث عن لعبة، كود CUSA، أو سنة...", all:"الكل", arOnly:"ألعاب بالعربية فقط", print:"🖨️ PDF",
   tag:"كتالوج ألعاب PS4 المعدّلة", h2:"🎮 مرحباً بك في عالم ألعاب PS4!",
