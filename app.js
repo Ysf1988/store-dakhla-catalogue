@@ -178,6 +178,7 @@ function coverPage() {
     <p>✅ ${HOW[lang].n}</p></div>
    <a href="${link}" target="_blank" rel="noopener noreferrer" class="cover-wa-btn"><span>${x.wa} ${PHONE}</span><span>💬</span></a>
    <a href="#first" class="cover-games-btn"><span>${x.browse}</span><span>⬇️</span></a>
+   <a href="#reviews" class="cover-games-btn" style="background:linear-gradient(135deg,#1877f2,#0b5ed7)"><span>${REV[lang].t}</span></a>
   </div>
   <div class="store-footer-note"><p>${x.n1}</p><p>${x.n2}</p></div>
  </section>`;
@@ -214,6 +215,63 @@ function buildChips() {
   .map(([v, n]) => `<button class="chip ${v === genre ? "on" : ""}" onclick="setGenre('${v}')">${esc(n)}</button>`).join("");
 }
 
+/* ===== آراء الزبائن ===== */
+const PUBLIC_URL = "https://ysf1988.github.io/store-dakhla-catalogue/";
+const IG_URL = "https://www.instagram.com/youssef.satouri/";  // ← ضع رابط حساب المتجر على إنستغرام
+const REVIEWS = [ /* أضف الآراء المعتمدة هنا: {name:"محمد", stars:5, text:"خدمة ممتازة وتثبيت سريع"}, */ ];
+const FB_LOCALE = {ar:"ar_AR", fr:"fr_FR", en:"en_US"};
+const REV = {
+ ar:{t:"⭐ آراء الزبائن",intro:"شاركنا رأيك في الخدمة وساعد غيرك على الاختيار.",name:"اسمك",ph:"اكتب تعليقك هنا...",
+  fb:"مشاركة على فيسبوك",ig:"نسخ وفتح إنستغرام",wa:"إرسال للمتجر",need:"اكتب تعليقك أولًا.",
+  copied:"تم نسخ تعليقك ✅ الصقه في فيسبوك/إنستغرام إن لم يظهر تلقائيًا.",fbc:"أو علّق مباشرة بحساب فيسبوك:",
+  none:"كن أول من يترك رأيه!",waHead:"رأيي في STORE DAKHLA:"},
+ fr:{t:"⭐ Avis des clients",intro:"Donnez votre avis sur notre service et aidez les autres à choisir.",name:"Votre nom",ph:"Écrivez votre commentaire ici...",
+  fb:"Partager sur Facebook",ig:"Copier et ouvrir Instagram",wa:"Envoyer au magasin",need:"Écrivez d'abord votre commentaire.",
+  copied:"Commentaire copié ✅ Collez-le sur Facebook/Instagram s'il n'apparaît pas automatiquement.",fbc:"Ou commentez directement avec Facebook :",
+  none:"Soyez le premier à donner votre avis !",waHead:"Mon avis sur STORE DAKHLA :"},
+ en:{t:"⭐ Customer reviews",intro:"Share your experience and help others choose.",name:"Your name",ph:"Write your comment here...",
+  fb:"Share on Facebook",ig:"Copy & open Instagram",wa:"Send to the store",need:"Please write your comment first.",
+  copied:"Comment copied ✅ Paste it on Facebook/Instagram if it doesn't appear automatically.",fbc:"Or comment directly with Facebook:",
+  none:"Be the first to leave a review!",waHead:"My review of STORE DAKHLA:"}
+};
+function renderReviews() {
+ const r = REV[lang];
+ const list = REVIEWS.map(v => `<div class="rev-card"><b>${esc(v.name)}</b> <span>${"⭐".repeat(v.stars || 5)}</span><p>${esc(v.text)}</p></div>`).join("")
+  || `<p class="rev-none">${r.none}</p>`;
+ $("reviews").innerHTML = `<h2 class="section-title">${r.t}</h2><p>${r.intro}</p>${list}
+  <div class="rev-form">
+   <input id="revName" placeholder="${r.name}" maxlength="40">
+   <select id="revStars">${[5,4,3,2,1].map(n => `<option value="${n}">${"⭐".repeat(n)}</option>`).join("")}</select>
+   <textarea id="revText" rows="3" maxlength="400" placeholder="${r.ph}"></textarea>
+   <div class="rev-actions">
+    <button class="b-fb" onclick="shareReview('fb')">📘 ${r.fb}</button>
+    <button class="b-ig" onclick="shareReview('ig')">📸 ${r.ig}</button>
+    <button class="b-wa" onclick="shareReview('wa')">💬 ${r.wa}</button>
+   </div><div id="revMsg"></div>
+  </div>
+  <h3>${r.fbc}</h3>
+  <div class="fb-comments" data-href="${PUBLIC_URL}" data-width="100%" data-numposts="5"></div>`;
+ loadFB();
+}
+function shareReview(k) {
+ const x = $("revText").value.trim(), n = $("revName").value.trim(), r = REV[lang];
+ if (!x) { $("revMsg").textContent = r.need; return; }
+ const txt = `${"⭐".repeat(+$("revStars").value)} ${x}${n ? "\n— " + n : ""}\nSTORE DAKHLA`;
+ if (k === "wa") { window.open(`https://wa.me/${WA}?text=${encodeURIComponent(r.waHead + "\n" + txt)}`, "_blank"); return; }
+ if (k === "fb") window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PUBLIC_URL)}&quote=${encodeURIComponent(txt)}`, "_blank");
+ else window.open(IG_URL, "_blank");
+ try { navigator.clipboard.writeText(txt + "\n" + PUBLIC_URL).catch(() => {}); } catch(e) {}
+ $("revMsg").textContent = r.copied;
+}
+function loadFB() {
+ if (window.FB) { FB.XFBML.parse($("reviews")); return; }
+ if ($("fb-sdk")) return;
+ const s = document.createElement("script");
+ s.id = "fb-sdk"; s.async = true; s.crossOrigin = "anonymous";
+ s.src = `https://connect.facebook.net/${FB_LOCALE[lang]}/sdk.js#xfbml=1&version=v19.0`;
+ document.body.appendChild(s);
+}
+
 /* ===== اللغة ===== */
 function setLang(l) { lang = l; try { localStorage.setItem("sd_lang", l); } catch(e) {} applyLang(); }
 function applyLang() {
@@ -227,6 +285,6 @@ function applyLang() {
  $("cartLabel").textContent = "🛒 " + x.cart;
  $("sendBtn").textContent = x.send;
  document.querySelectorAll(".lang-sw button").forEach(b => b.classList.toggle("on", b.dataset.l === lang));
- buildChips(); render(); updateCartUI();
+ buildChips(); render(); renderReviews(); updateCartUI();
 }
 applyLang();
