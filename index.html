@@ -9,10 +9,6 @@
 <meta property="og:image:height" content="1367">
 <meta property="og:url" content="https://Ysf1988.github.io/store-dakhla-catalogue/">
 <meta property="og:description" content="اكتشف ألعاب PS4، تصفح الأغلفة وابحث عن لعبتك واطلبها مباشرة عبر واتساب. مدينة الداخلة.">
-<meta property="og:image" content="https://Ysf1988.github.io/store-dakhla-catalogue/store-dakhla-preview.jpg">
-<meta property="og:image:width" content="1151">
-<meta property="og:image:height" content="1367">
-<meta property="og:url" content="https://Ysf1988.github.io/store-dakhla-catalogue/">
 <meta property="og:locale" content="ar_MA">
 
 <meta name="twitter:card" content="summary_large_image">
@@ -539,291 +535,61 @@ input{min-width:180px}
   -webkit-print-color-adjust:exact;
  }
 }
+
+/* ===== إضافات ===== */
+.chips{display:flex;gap:6px;overflow-x:auto;width:100%;padding:2px 0;scrollbar-width:none}
+.chip{white-space:nowrap;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:6px 12px}
+.chip.on{background:#1680db}
+.lang-sw button{padding:4px 9px;background:transparent;border:1px solid transparent}
+.lang-sw button.on{background:#1680db}
+.cart-panel{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);width:min(92vw,420px);max-height:50vh;overflow:auto;background:#fff;color:#17283b;border-radius:14px;box-shadow:0 8px 30px #0004;padding:12px;z-index:1001;font-size:14px}
+.cart-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #e3ecf5}
+.cart-row button{background:#e11d48;padding:2px 8px}
+.cart-total{font-weight:bold;padding:8px 0;display:flex;justify-content:space-between}
+.clear-btn{background:#64788d;width:100%}
+.empty-box{text-align:center;margin-top:50px;position:relative;z-index:1}
+.empty-box .cover-wa-btn{margin-top:20px}
+.floating-cart{width:max-content;max-width:94vw}
+@media screen and (max-width:768px){
+ .games-grid{grid-template-rows:none!important;grid-auto-rows:auto;gap:8px}
+ .game-card{padding:6px;overflow:visible}
+ .game-name{font-size:13px;max-height:none;margin:4px 0}
+ .genre-tag{font-size:11px}
+ .game-meta{font-size:11px;line-height:1.6}
+ .card-wa-btn{font-size:12px;padding:9px;margin-top:6px}
+ .game-checkbox{width:22px;height:22px;top:6px;left:6px}
+ .footer{position:static;margin-top:10px}
+ .store-cover{min-height:auto}
+ .filters{padding:8px}
+}
+@media print{.chips,.lang-sw,#cartPanel{display:none!important}}
 </style>
 </head>
 
 <body>
 
 <div class="filters">
- <input id="search" placeholder="ابحث عن لعبة، كود CUSA، أو سنة..." oninput="render()">
- <select id="genre" onchange="render()">
-  <option value="">جميع التصنيفات</option>
- </select>
+ <input id="search" oninput="debounceRender()">
+ <label class="toolbar-group"><input type="checkbox" id="arOnly" onchange="render()" style="min-width:0"><span id="arLbl"></span></label>
+ <div class="toolbar-group lang-sw">
+  <button data-l="ar" onclick="setLang('ar')">AR</button>
+  <button data-l="fr" onclick="setLang('fr')">FR</button>
+  <button data-l="en" onclick="setLang('en')">EN</button>
+ </div>
+ <button id="printBtn" onclick="window.print()"></button>
+ <div class="chips" id="chips"></div>
 </div>
 
-<div id="count"></div>
 <div id="catalogue"></div>
 
-<!-- سلة الطلبات العائمة للواتساب -->
-<div id="floatingCart" class="floating-cart" style="display:none;">
- <span>🛒 الألعاب المحددة: <b id="cartCount">0</b></span>
- <button onclick="sendCartToWhatsApp()">إرسال مجموعة الألعاب عبر واتساب 💬</button>
+<div id="cartPanel" class="cart-panel" style="display:none"></div>
+<div id="floatingCart" class="floating-cart" style="display:none">
+ <span onclick="toggleCartPanel()" style="cursor:pointer"><span id="cartLabel"></span>: <b id="cartCount">0</b> ▾</span>
+ <button id="sendBtn" onclick="sendCartToWhatsApp()"></button>
 </div>
+
 <script src="Scripte.js"></script>
-<script>
-
-// نظام التحكم بحجم الأغلفة ديناميكياً
-let currentCoverHeight = 75; // النسبة المئوية الافتراضية
-
-function changeCoverSize(amount) {
- currentCoverHeight += amount;
- if (currentCoverHeight < 30) currentCoverHeight = 30; // الحد الأدنى للجماليات
- if (currentCoverHeight > 75) currentCoverHeight = 75; // الحد الأقصى لكي لا تضغط النصوص
- 
- document.documentElement.style.setProperty('--cover-height', currentCoverHeight + '%');
- document.getElementById('sizeIndicator').textContent = currentCoverHeight + '%';
- localStorage.setItem('store_cover_height', currentCoverHeight);
-}
-
-// استرجاع الحجم المخزن مسبقاً إن وجد
-window.addEventListener('DOMContentLoaded', () => {
- const savedHeight = localStorage.getItem('store_cover_height');
- if (savedHeight) {
-  currentCoverHeight = parseInt(savedHeight);
-  document.documentElement.style.setProperty('--cover-height', currentCoverHeight + '%');
-  document.getElementById('sizeIndicator').textContent = currentCoverHeight + '%';
- }
-});
-
-
-const catalogue=document.getElementById("catalogue");
-
-genres.forEach(g=>{
- const opt=document.createElement("option");
- opt.value=g;
- opt.textContent=genreLabels[g];
- document.getElementById("genre").appendChild(opt);
-});
-
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",
-  '"':"&quot;","'":"&#39;"
- }[c]));
-}
-
-function coverHTML(game){
- const url = covers[game.cusa];
- if(url && url.startsWith("http")){
-  return `<img src="${escapeHTML(url)}" alt="${escapeHTML(game.name)}" onerror="this.outerHTML='<div class=\\'cover-placeholder\\'><strong>PS4</strong><small>STORE DAKHLA</small></div>'">`;
- }
- return `
- <div class="cover-placeholder">
-  <strong>PS4</strong>
-  <small>STORE DAKHLA</small>
- </div>`;
-}
-
-// تخزين الألعاب المختارة في السلة المتعددة مع كامل التفاصيل
-let selectedCart = [];
-
-function toggleCart(gameNumber) {
- const game = games.find(g => g.number === gameNumber);
- if (!game) return;
-
- const index = selectedCart.findIndex(item => item.number === gameNumber);
- if (index > -1) {
-  selectedCart.splice(index, 1);
- } else {
-  selectedCart.push(game);
- }
- updateCartUI();
-}
-
-function updateCartUI() {
- const cartDiv = document.getElementById("floatingCart");
- const cartCount = document.getElementById("cartCount");
- cartCount.textContent = selectedCart.length;
- if (selectedCart.length > 0) {
-  cartDiv.style.display = "flex";
- } else {
-  cartDiv.style.display = "none";
- }
-}
-
-function sendCartToWhatsApp() {
- if (selectedCart.length === 0) return;
- let text = "أريد طلب الألعاب التالية:\n";
- selectedCart.forEach((item, idx) => {
-  text += `${idx + 1}. *${item.name}* (${item.source || '—'}) _ ${item.size}\n`;
- });
- const encoded = encodeURIComponent(text);
- window.open(`https://wa.me/212777497771?text=${encoded}`, '_blank');
-}
-
-function makeCard(g){
- const waText = encodeURIComponent(`${g.name} (${g.source || '—'}) _ ${g.size}`);
- const waSingleLink = `https://wa.me/212777497771?text=${waText}`;
- const language = gameLanguages[g.name] || "الإنجليزية";
- const isChecked = selectedCart.some(item => item.number === g.number) ? "checked" : "";
-
- return `
- <div class="game-card">
-  <input type="checkbox" class="game-checkbox" ${isChecked} onchange="toggleCart(${g.number})" title="حدد لإضافة السلة">
-  ${coverHTML(g)}
-  <div class="game-name">${escapeHTML(g.name)}</div>
-  <div class="genre-tag">${escapeHTML(genreLabels[g.genre]||g.genre)}</div>
-  
-  <div class="game-meta">
-    الكود: <span dir="ltr">${escapeHTML(g.cusa||"—")}</span>
-    | الإصدار: <span dir="ltr">${escapeHTML(g.year)}</span><br>
-
-    الحجم: <span dir="ltr">${escapeHTML(g.size)}</span>
-    | المصدر: <span dir="ltr">${escapeHTML(g.source)}</span><br>
-
-    🌐 اللغة:
-    <strong style="color:#0756a5">
-        ${escapeHTML(language)}
-    </strong>
-  </div>
-
-  <a href="${waSingleLink}" target="_blank" class="card-wa-btn">
-   🛒 اطلب عبر واتساب
-  </a>
- </div>`;
-}
-
-function makePage(title,items,pageNo,totalPages){
- const cards=items.map(makeCard).join("");
- return `
- <section class="page" id="games">
-  <h2 class="section-title">${escapeHTML(title)}</h2>
-  <div class="page-info">
-   ${items.length} ألعاب • صفحة ${pageNo} من ${totalPages}
-  </div>
-  <div class="games-grid">${cards}</div>
-  <div class="footer">
-   <span>• STORE DAKHLA •</span>
-   <span>• واتساب: 0777497771 •</span>
-  </div>
- </section>`;
-}
-
-function makeStoreCoverPage() {
- const waLink = "https://wa.me/212777497771?text=سلام%20Store%20Dakhla،%20أريد%20الاستفسار%20عن%20ألعاب%20PS4";
- const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(waLink)}`;
-
- return `
- 
-<section class="page store-cover">
-
-  <div class="cover-glow"></div>
-
-  <div class="store-logo-area">
-    <span class="cover-tag">PLAYSTATION 4 GAMING</span>
-    <h1>STORE DAKHLA</h1>
-    <p>كتالوج ألعاب PS4 المعدّلة</p>
-    <div class="logo-line"></div>
-  </div>
-
-  <div class="store-badge">
-
-    <h2>🎮 مرحباً بك في عالم ألعاب PS4!</h2>
-
-    <h3>
-      هل تمتلك جهاز PS4 معدّلاً وتبحث عن ألعاب جديدة؟
-      أنت في المكان المناسب!
-    </h3>
-
-    <p>
-      اكتشف أكثر من 100 لعبة متنوعة، واختر ألعابك المفضلة
-      واستفد من خدمة تثبيت الألعاب بسرعة واحترافية.
-    </p>
-
-    <p>
-      لم تجد اللعبة التي تبحث عنها؟
-      راسلنا وسنعمل على توفيرها لك.
-    </p>
-
-    <div class="cover-features">
-      <div>🎮 ألعاب متنوعة</div>
-      <div>⚡ تثبيت سريع</div>
-      <div>🚚 توصيل مجاني داخل الداخلة</div>
-    </div>
-
-    <div class="qr-container">
-      <p>امسح الرمز للتواصل معنا عبر واتساب</p>
-      <img src="${qrApiUrl}" alt="رمز التواصل عبر واتساب">
-    </div>
-
-    <a href="${waLink}" target="_blank"
-       rel="noopener noreferrer" class="cover-wa-btn">
-      <span>واتساب 0777497771</span>
-      <span>💬</span>
-    </a>
-
-    <a href="#games" class="cover-games-btn">
-      <span>استعرض الألعاب الآن</span>
-      <span>⬇️</span>
-    </a>
-
-  </div>
-
-  <div class="store-footer-note">
-    <p>✨ اختر ألعابك المفضلة واستمتع بتجربة لعب رائعة!</p>
-    <p>📍 STORE DAKHLA - مدينة الداخلة</p>
-  </div>
-
-</section>`;
-}
-
-function render(){
- const query=document.getElementById("search").value.toLowerCase();
- const genre=document.getElementById("genre").value;
- const source = '';
-
- let filtered=games.filter(g=>{
-  const text=[g.name,g.cusa,g.size,g.source,g.genre,g.year,
-              genreLabels[g.genre]||"",String(g.number)].join(" ").toLowerCase();
-  return text.includes(query) &&
-   (!genre||g.genre===genre) &&
-   (!source||g.source===source);
- });
-
- //document.getElementById("count").textContent =
-  //`النتائج: ${filtered.length} من أصل ${games.length} لعبة`;
-
- let html="";
- 
- if(!query && !genre && !source) {
-  html += makeStoreCoverPage();
- }
-
- const categories=genre?[genre]:genres;
-
- categories.forEach(category=>{
-  const list=filtered.filter(g=>g.genre===category);
-  if(!list.length)return;
-
-  const chunks=[];
-  for(let i=0;i<list.length;i+=12)
-   chunks.push(list.slice(i,i+12));
-
-  chunks.forEach((chunk,index)=>{
-   html+=makePage(
-    genreLabels[category]||category,
-    chunk,index+1,chunks.length
-   );
-  });
- });
-
- if(!html){
-  html='<section class="page"><h2 style="text-align:center;margin-top:50px;">لا توجد نتائج مطابقة لبحثك</h2></section>';
- }
- catalogue.innerHTML=html;
-}
-
-function resetFilters(){
- document.getElementById("search").value="";
- document.getElementById("genre").value="";
- document.getElementById("source").value="";
- render();
-}
-
-render();
-
-</script>
+<script src="app.js"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2b857f32f0e64bb49c9bb074ff335169"}'></script><!-- End Cloudflare Web Analytics -->
- 
 </body>
 </html>
