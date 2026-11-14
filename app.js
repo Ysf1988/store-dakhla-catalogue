@@ -42,6 +42,17 @@ const T = {
   req:"Request this game on WhatsApp", reqMsg:"Hi, I'm looking for the game:", head:"I'd like to order these games:",
   hello:"Hi Store Dakhla, I'd like info about PS4 games", pick:"Tick to add to cart"}
 };
+const HOW = {
+ ar:{t:"📋 كيف تطلب؟",s:"لعبة واحدة:",s1:"اضغط زر «اطلب عبر واتساب» تحت اللعبة، فتفتح المحادثة برسالة جاهزة، ثم أرسلها.",
+  m:"مجموعة ألعاب:",m1:"حدّد ☑ على كل الألعاب التي تريدها، ثم اضغط على الشريط العائم 🛒 لمراجعة القائمة وحذف ما لا تريد، ثم «إرسال عبر واتساب» ليصلنا طلبك كاملًا مع المجموع.",
+  n:"بعد الإرسال نؤكد لك الطلب ونتفق على موعد التثبيت."},
+ fr:{t:"📋 Comment commander ?",s:"Un seul jeu :",s1:"Appuyez sur « Commander sur WhatsApp » sous le jeu : la discussion s'ouvre avec un message prêt, il suffit de l'envoyer.",
+  m:"Plusieurs jeux :",m1:"Cochez ☑ tous les jeux voulus, ouvrez la barre flottante 🛒 pour vérifier ou retirer des jeux, puis « Envoyer sur WhatsApp » : votre commande complète arrive avec le total.",
+  n:"Après l'envoi, nous confirmons la commande et fixons le moment de l'installation."},
+ en:{t:"📋 How to order",s:"A single game:",s1:"Tap “Order on WhatsApp” under the game; the chat opens with a ready message, just send it.",
+  m:"Several games:",m1:"Tick ☑ every game you want, open the floating 🛒 bar to review or remove games, then “Send via WhatsApp” to send the full order with the total.",
+  n:"After sending, we confirm your order and agree on the installation time."}
+};
 const GL = {
  fr:{HORREUR:"Horreur",GUERRE:"Guerre & tir","MONDE OUVERT":"Monde ouvert",AVENTURE:"Aventure",COMBAT:"Combat",SPORT:"Sport",COURSE:"Course",RPG:"RPG",FAMILLE:"Famille & coop",SIMULATION:"Simulation",ACTION:"Action",tools:"Outils"},
  en:{HORREUR:"Horror",GUERRE:"War & shooters","MONDE OUVERT":"Open world",AVENTURE:"Adventure",COMBAT:"Fighting",SPORT:"Sports",COURSE:"Racing",RPG:"RPG",FAMILLE:"Family & co-op",SIMULATION:"Simulation",ACTION:"Action",tools:"Tools"}
@@ -162,6 +173,10 @@ function coverPage() {
    <h2>${x.h2}</h2><h3>${x.h3}</h3>
    <p>${x.p1.replace("{n}", Math.floor(games.length / 10) * 10)}</p><p>${x.p2}</p>
    <div class="cover-features">${x.f.map(f => `<div>${f}</div>`).join("")}</div>
+   <div class="how-box"><h4>${HOW[lang].t}</h4>
+    <p><b>1️⃣ ${HOW[lang].s}</b> ${HOW[lang].s1}</p>
+    <p><b>2️⃣ ${HOW[lang].m}</b> ${HOW[lang].m1}</p>
+    <p>✅ ${HOW[lang].n}</p></div>
    <div class="qr-container"><p>${x.qr}</p><img src="${qr}" alt="QR WhatsApp"></div>
    <a href="${link}" target="_blank" rel="noopener noreferrer" class="cover-wa-btn"><span>${x.wa} ${PHONE}</span><span>💬</span></a>
    <a href="#first" class="cover-games-btn"><span>${x.browse}</span><span>⬇️</span></a>
