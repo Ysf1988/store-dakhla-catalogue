@@ -1,4 +1,5 @@
 const covers = {
+ "CUSA33609": "https://img.pspkg.com/ps4/image/WRC%20Generations%20The%20FIA%20WRC%20Official%20Game.webp?v=3341",
  "CUSA08519": "https://imagedelivery.net/2b3D1Oo3LJTf2No6Qa-wbQ/cb61a505-a5f3-4482-b48a-9da5ff800e00/public",
  "CUSA04099": "https://imagedelivery.net/2b3D1Oo3LJTf2No6Qa-wbQ/2ab82e2a-694c-4385-486e-a02fe58d2f00/public",
  "CUSA05573": "https://geedie.lt/storage/products/sony-playstation-4-the-witcher-3-wild-hunt-game-of-the-year-edition-4/6E9MvQ6f0DX7KL3p4lyLvyvtHGJBkOqVr7oXzR4n.png",
@@ -100,7 +101,8 @@ const covers = {
  "CUSA00127": "https://pspkg.com/ps4/tools-images/netflix.webp",
 };
 
-const raw = `Battlefield V|CUSA08670|82 Go|1|GUERRE|2018
+const raw = `WRC Generations|CUSA33609|40 Go|1|COURSE|2022
+Battlefield V|CUSA08670|82 Go|1|GUERRE|2018
 Days Gone Complete|CUSA15027|32,7 Go|1|HORREUR|2019
 Gran Turismo 7|CUSA24767|78,9 Go|1|COURSE|2022
 JUMP FORCE|CUSA11638|23,0 Go|1|COMBAT|2019
@@ -261,6 +263,7 @@ const gameLanguages = {
  "RiMS Racing": "الإنجليزية",
  "Red Dead Redemption 2": "العربية",
  "Sniper Elite 4": "الإنجليزية",
+ "WRC Generations": "الإنجليزية",
  "The Crew 2": "الإنجليزية",
  "The Witcher 3 Wild Hunt": "العربية",
  "Tom Clancys Ghost Recon Wildlands Ultimate Edition": "العربية",
@@ -368,5 +371,3 @@ const genres = [
  "COMBAT","SPORT","COURSE","RPG","FAMILLE",
  "SIMULATION","ACTION","tools"
 ];
-
-
