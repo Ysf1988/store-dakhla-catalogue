@@ -588,7 +588,16 @@ input{min-width:180px}
  .games-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px}
  .game-card{padding:6px}.game-name{font-size:13px}.game-meta{font-size:11px}
 }
-@media print{.chips,.lang-sw,#cartPanel{display:none!important}}
+.reviews{max-width:900px;margin:30px auto 110px;padding:0 16px}
+.rev-card{background:#fff;border-radius:12px;padding:12px 16px;margin:10px 0;box-shadow:0 2px 8px #0001}
+.rev-card p{margin:6px 0 0}
+.rev-form{background:#fff;border-radius:14px;padding:16px;margin:16px 0;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 10px #0001}
+.rev-form input,.rev-form select,.rev-form textarea{width:100%;font-size:14px}
+.rev-actions{display:flex;flex-wrap:wrap;gap:8px}
+.rev-actions button{flex:1;min-width:150px;padding:10px}
+.b-fb{background:#1877f2!important}.b-ig{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)!important}.b-wa{background:#25d366!important}
+#revMsg{color:#0756a5;font-size:13px}
+@media print{.reviews,.chips,.lang-sw,#cartPanel{display:none!important}}
 </style>
 </head>
 
@@ -607,6 +616,8 @@ input{min-width:180px}
 </div>
 
 <div id="catalogue"></div>
+<div id="fb-root"></div>
+<section id="reviews" class="reviews"></section>
 
 <div id="cartPanel" class="cart-panel" style="display:none"></div>
 <div id="floatingCart" class="floating-cart" style="display:none">
