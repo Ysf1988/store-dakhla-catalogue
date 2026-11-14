@@ -597,7 +597,22 @@ input{min-width:180px}
 .rev-actions button{flex:1;min-width:150px;padding:10px}
 .b-fb{background:#1877f2!important}.b-ig{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)!important}.b-wa{background:#25d366!important}
 #revMsg{color:#0756a5;font-size:13px}
-@media print{.reviews,.chips,.lang-sw,#cartPanel{display:none!important}}
+.site-footer{margin:40px 0 0;padding:36px 16px 100px;background:linear-gradient(135deg,#071b36,#0b2547 60%,#0756a5);color:#e8f1fb;text-align:center}
+.site-footer:empty{display:none}
+.sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px}
+.sf-brand{font-size:24px;font-weight:800;letter-spacing:2px;color:#fff}
+.sf-brand small{display:block;font-size:13px;font-weight:400;letter-spacing:0;color:#8bc9ff;margin-top:4px}
+.sf-title{font-size:14px;color:#9db4cc}
+.sf-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.sf-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;text-decoration:none;font-size:14px;transition:transform .2s,background .2s}
+.sf-links a:hover{transform:translateY(-2px)}
+.sf-links svg{width:18px;height:18px}
+.sf-links a.ig:hover{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)}
+.sf-links a.tt:hover{background:#000}
+.sf-links a.fb:hover{background:#1877f2}
+.sf-links a.wa:hover{background:#25d366}
+.sf-copy{width:100%;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:#8aa3bd}
+@media print{.site-footer,.reviews,.chips,.lang-sw,#cartPanel{display:none!important}}
 </style>
 </head>
 
@@ -616,6 +631,7 @@ input{min-width:180px}
 </div>
 
 <div id="catalogue"></div>
+<footer id="siteFooter" class="site-footer"></footer>
 <div id="fb-root"></div>
 <section id="reviews" class="reviews"></section>
 
